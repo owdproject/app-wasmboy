@@ -1,0 +1,14 @@
+{
+  "name": "owd-app-wasmboy",
+  "private": true,
+  "version": "3.0.0-alpha.0",
+  "license": "MIT",
+  "homepage": "https://github.com/owdproject/app-wasmboy",
+  "author": {
+    "name": "dxlliv",
+    "url": "https://github.com/dxlliv"
+  },
+  "dependencies": {
+    "wasmboy": "0.7.1"
+  }
+}
