@@ -2,7 +2,7 @@
   "name": "owd-app-wasmboy",
   "private": true,
   "version": "3.0.0-alpha.0",
-  "license": "MIT",
+  "license": "GPL-3.0-or-later",
   "homepage": "https://github.com/owdproject/app-wasmboy",
   "author": {
     "name": "dxlliv",
