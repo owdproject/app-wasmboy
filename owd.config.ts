@@ -36,7 +36,7 @@ export default defineDesktopApp({
             },
         },
     },
-    defaultMeta: {
+    meta: {
         config: {
             gameTitleAsWindowName: false,
             isPausedByPlayer: false,

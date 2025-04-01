@@ -1,3 +1,5 @@
+import {useDesktopVolumeStore} from "~/app/stores/storeDesktopVolume";
+
 export const wasmboyConfig = {
     isAudioEnabled: true,
     enableAudioDebugging: true,
@@ -7,9 +9,9 @@ export const wasmboyConfig = {
     onPause: () => {},
     onLoadedAndStarted: () => {},
     updateAudioCallback: (audioContext: AudioContext, audioBufferSourceNode: AudioBufferSourceNode): AudioNode => {
-        const volumeStore = useVolumeStore()
+        const desktopVolumeStore = useDesktopVolumeStore()
         const gainNode = audioContext.createGain()
-        gainNode.gain.value = volumeStore.master / 100
+        gainNode.gain.value = desktopVolumeStore.master / 100
 
         audioBufferSourceNode.connect(gainNode)
         gainNode.connect(audioContext.destination)
