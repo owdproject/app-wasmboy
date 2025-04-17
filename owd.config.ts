@@ -1,4 +1,4 @@
-export default defineDesktopApp({
+export default {
     id: "org.owdproject.wasmboy",
     title: "WasmBoy",
     category: 'games',
@@ -59,7 +59,7 @@ export default defineDesktopApp({
             handleCommand(app, args)
         },
     },
-})
+}
 
 function handleCommand(app: IApplicationController, args: any[]) {
     if (args.length === 1 && ['manager', 'settings'].includes(args[0])) {
