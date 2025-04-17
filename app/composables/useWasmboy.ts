@@ -28,7 +28,9 @@ export function useWasmboy() {
      */
     async function restorePreviousGame() {
         // wait until store has been restored
-        await window.application.store.$persistedState.isReady()
+        if (window.application.store.$persistedState) {
+            await window.application.store.$persistedState.isReady()
+        }
 
         const latestGame = await getLatestGameFromWasmboyStorage()
 
