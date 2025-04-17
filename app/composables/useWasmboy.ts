@@ -15,7 +15,7 @@ export function useWasmboy() {
         window = _window
 
         // override wasmboy config
-        wasmboyConfig.isGbcColorizationEnabled = window.applicationController.meta.config.isGbcColorizationEnabled
+        wasmboyConfig.isGbcColorizationEnabled = window.application.meta.config.isGbcColorizationEnabled
         wasmboyConfig.onPause = () => {
             status.isPaused = true
         }
@@ -28,7 +28,7 @@ export function useWasmboy() {
      */
     async function restorePreviousGame() {
         // wait until store has been restored
-        await window.applicationController.store.$persistedState.isReady()
+        await window.application.store.$persistedState.isReady()
 
         const latestGame = await getLatestGameFromWasmboyStorage()
 
@@ -94,15 +94,15 @@ export function useWasmboy() {
                 fileName: cartridgeRom.fileName
             })
 
-            debugWarn(window.applicationController.meta.config)
+            debugWarn(window.application.meta.config)
 
-            setSpeed(window.applicationController.meta.config.speed)
+            setSpeed(window.application.meta.config.speed)
 
             await restoreGameState()
 
             status.isLoaded = true
 
-            if (!window.applicationController.meta.config.isPausedByPlayer) {
+            if (!window.application.meta.config.isPausedByPlayer) {
                 await playEmulator()
             }
 
@@ -140,7 +140,7 @@ export function useWasmboy() {
     async function playEmulator() {
         await WasmBoy.play()
         status.isPaused = false
-        window.applicationController.meta.config.isPausedByPlayer = false
+        window.application.meta.config.isPausedByPlayer = false
     }
 
     /**
@@ -149,7 +149,7 @@ export function useWasmboy() {
     async function pauseEmulator() {
         await WasmBoy.pause()
         status.isPaused = true
-        window.applicationController.meta.config.isPausedByPlayer = true
+        window.application.meta.config.isPausedByPlayer = true
     }
 
     /**
@@ -175,7 +175,7 @@ export function useWasmboy() {
      */
     function setSpeed(speed: number) {
         WasmBoy.setSpeed(speed)
-        window.applicationController.meta.config.speed = speed
+        window.application.meta.config.speed = speed
     }
 
     function setWindowNameAsGameTitle() {
@@ -183,7 +183,7 @@ export function useWasmboy() {
             return input.replace(/[^a-zA-Z0-9\s.,!?()\-]/g, '');
         }
 
-        if (!window.applicationController.meta.config.gameTitleAsWindowName) {
+        if (!window.application.meta.config.gameTitleAsWindowName) {
             return
         }
 

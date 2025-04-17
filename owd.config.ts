@@ -1,14 +1,12 @@
 export default defineDesktopApp({
     id: "org.owdproject.wasmboy",
-    name: "WasmBoy",
+    title: "WasmBoy",
     category: 'games',
     icon: "streamline:gameboy",
     singleton: true,
     windows: {
         main: {
             component: () => import('./app/components/Window/WindowWasmboy.vue'),
-            category: "games",
-            title: "WasmBoy",
             resizable: false,
             size: {
                 width: 'initial',
@@ -22,7 +20,6 @@ export default defineDesktopApp({
         },
         manager: {
             component: () => import('./app/components/Window/WindowWasmboyManager.vue'),
-            category: "games",
             title: "WasmBoy Manager",
             resizable: false,
             size: {
@@ -45,6 +42,15 @@ export default defineDesktopApp({
             screenSize: 1,
         }
     },
+    entries: {
+        wasmboy: {
+            command: "wasmboy"
+        },
+        manager: {
+            title: "WasmBoy Manager",
+            command: "wasmboy manager"
+        }
+    },
     commands: {
         wasmboy: (app, args) => {
             handleCommand(app, args)
@@ -53,9 +59,6 @@ export default defineDesktopApp({
             handleCommand(app, args)
         },
     },
-    onLaunch: (app) => {
-        app.openWindow('main')
-    }
 })
 
 function handleCommand(app: IApplicationController, args: any[]) {

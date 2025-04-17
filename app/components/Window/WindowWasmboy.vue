@@ -8,7 +8,7 @@ const visibility = useDocumentVisibility()
 const wasmboy = useWasmboy()
 const wasmboyCanvas: any = useTemplateRef('wasmboyCanvas')
 
-const meta = props.window.applicationController.meta
+const meta = props.window.application.meta
 
 // window lifecycle
 
@@ -48,11 +48,12 @@ onChange((files) => {
  * Open WasmBoy window manager
  */
 function onWasmBoyWindowManagerOpen() {
-  props.window.applicationController.openWindow('manager')
+  props.window.application.openWindow('manager')
 }
 
 const gameScreenSizeClass = computed(() => {
-  switch (props.window.applicationController.meta.config.screenSize) {
+  console.log('QWE', props.window)
+  switch (props.window.application.meta.config.screenSize) {
     case 1.5:
       return 'game-screen--15'
     case 2:

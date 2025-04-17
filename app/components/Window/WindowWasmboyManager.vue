@@ -24,7 +24,7 @@ defineProps<{
         </TabPanel>
 
         <TabPanel :value="2">
-          <WasmboyManagerSettings :meta="window.applicationController.meta" />
+          <WasmboyManagerSettings :meta="window.application.meta" />
         </TabPanel>
       </TabPanels>
     </Tabs>
