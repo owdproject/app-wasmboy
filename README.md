@@ -4,7 +4,7 @@
 
 ## Overview
 
-The OWD WasmBoy App is a GameBoy implementation of torch2424/wasmboy for Open Web Desktop.
+The OWD WasmBoy App is a GameBoy emulator based on torch2424/wasmboy for Open Web Desktop.
 
 ## Quick Installation
 
@@ -34,7 +34,7 @@ The OWD WasmBoy App is a GameBoy implementation of torch2424/wasmboy for Open We
         ],
     
         loader: async () => {
-            await defineDesktopApp(AppXterm)
+            await defineDesktopApp(AppWasmboy)
         }
     }
     ```
