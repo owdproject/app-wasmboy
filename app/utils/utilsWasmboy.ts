@@ -1,4 +1,4 @@
-import {useDesktopVolumeStore} from "~/app/stores/storeDesktopVolume";
+import {useDesktopVolumeStore} from "@owdproject/core";
 
 export const wasmboyConfig = {
     isAudioEnabled: true,
