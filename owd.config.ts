@@ -9,8 +9,8 @@ export default {
             component: () => import('./app/components/Window/WindowWasmboy.vue'),
             resizable: false,
             size: {
-                width: 'initial',
-                height: 'initial',
+                width: 'auto',
+                height: 'auto',
             },
             position: {
                 x: 400,
