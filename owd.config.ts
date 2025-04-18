@@ -48,6 +48,7 @@ export default {
         },
         manager: {
             title: "WasmBoy Manager",
+            visibility: "secondary",
             command: "wasmboy manager"
         }
     },
