@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">WasmBoy</h1>
 <h3 align="center">
-  WasmBoy App for your Open Web Desktop client
+  WasmBoy App for your Open Web Desktop client.
 </h3>
 
 ## Overview
