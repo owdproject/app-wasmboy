@@ -1,5 +1,9 @@
 // @ts-ignore
 import {WasmBoy} from "wasmboy"
+import {useWasmboyLibrary} from "./useWasmboyLibrary";
+import {debugLog, debugWarn, debugError} from "@owdproject/core/runtime/utils/utilsDebug"
+import {reactive} from "@vue/reactivity"
+import {wasmboyConfig, getLatestGameFromWasmboyStorage} from "../utils/utilsWasmboy";
 
 const wasmboyLibrary = useWasmboyLibrary()
 

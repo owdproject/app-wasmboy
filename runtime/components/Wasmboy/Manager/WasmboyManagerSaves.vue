@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import {UseTimeAgo} from "@vueuse/components";
+import {useWasmboy} from "../../../composables/useWasmboy";
+import {useWasmboyLibrary} from "../../../composables/useWasmboyLibrary";
 
 const wasmboy = useWasmboy()
 const wasmboyLibrary = useWasmboyLibrary()
-
 </script>
 
 <template>

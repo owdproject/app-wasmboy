@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import WasmboyManagerGames from "../Wasmboy/Manager/WasmboyManagerGames.vue";
+import WasmboyManagerSaves from "../Wasmboy/Manager/WasmboyManagerSaves.vue";
+import WasmboyManagerSettings from "../Wasmboy/Manager/WasmboyManagerSettings.vue";
+
 defineProps<{
   window: IWindowController
 }>()

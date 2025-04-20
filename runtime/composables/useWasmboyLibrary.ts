@@ -1,3 +1,6 @@
+import {markRaw} from "vue"
+import {ref, computed} from "@vue/reactivity"
+
 const DB_NAME = 'wasmboy'
 const STORE_NAME = 'keyval'
 

@@ -1,3 +1,6 @@
+import {useDesktopVolumeStore} from "@owdproject/core/runtime/stores/storeDesktopVolume"
+import {markRaw} from "vue"
+
 export const wasmboyConfig = {
     isAudioEnabled: true,
     enableAudioDebugging: true,

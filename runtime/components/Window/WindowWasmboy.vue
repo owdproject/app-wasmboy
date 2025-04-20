@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import {useDocumentVisibility, useFileDialog} from "@vueuse/core"
+import {onMounted, onUnmounted, watch, useTemplateRef} from "vue"
+import {computed} from "@vue/reactivity"
+import {useWasmboy} from "../../composables/useWasmboy"
+
 const props = defineProps<{
   window: IWindowController
 }>()
@@ -52,7 +57,6 @@ function onWasmBoyWindowManagerOpen() {
 }
 
 const gameScreenSizeClass = computed(() => {
-  console.log('QWE', props.window)
   switch (props.window.application.meta.config.screenSize) {
     case 1.5:
       return 'game-screen--15'

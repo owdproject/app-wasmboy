@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import {useWasmboy} from "../../../../runtime/composables/useWasmboy";
+
 defineProps<{
   meta: IApplicationMeta
 }>()

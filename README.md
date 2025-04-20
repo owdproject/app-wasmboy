@@ -1,48 +1,44 @@
-# About WasmBoy
-
-> WasmBoy app for your Open Web Desktop client
+<p align="center">
+  <img width="160" height="160" src="https://avatars.githubusercontent.com/u/65117737?s=160&v=4" />
+</p>
+<h1 align="center">WasmBoy</h1>
+<h3 align="center">
+  WasmBoy App for your Open Web Desktop client
+</h3>
 
 ## Overview
 
-The OWD WasmBoy App is a GameBoy emulator based on torch2424/wasmboy for Open Web Desktop.
+This app for Open Web Desktop is a Game Boy emulator based on torch2424/wasmboy.
 
-## Quick Installation
+## Installation
 
-1.  Navigate to your OWD client folder in your terminal:
+1.  Navigate to your client folder in your terminal:
 
     ```bash
     cd owd-client
     ```
 
-2.  Install the module using npm or yarn:
+2.  Install the desktop module using npm or yarn:
 
     ```bash
-    npm install github:owdproject/app-wasmboy wasmboy
+    npm install @owdproject/app-wasmboy wasmboy
     ```
 
-3.  Register the application in your OWD configuration file:
+3.  Register the application in your desktop configuration file:
 
     ```typescript
     // owd.config.ts
-    import AppWasmboy from 'owd-app-wasmboy/owd.config'
-    
-    export const owdConfig = {
-        theme: ['github:owdproject/theme-win95', { install: true }],
-    
+    export default defineDesktopConfig({
         apps: [
-           './node_modules/owd-app-wasmboy',
-        ],
-    
-        loader: async () => {
-            await defineDesktopApp(AppWasmboy)
-        }
-    }
+            '@owdproject/app-wasmboy',
+        ]
+    })
     ```
 
 ## Compatibility
 
-This application is compatible with Open Web Desktop client version `3.0.0-alpha.0`.
+The application is compatible with Open Web Desktop client version `3.0.0-alpha.6`.
 
 ## License
 
-This project is released under the [GNU GPLv3](LICENSE).
+The application is released under the [GNU General Public License v3](LICENSE).

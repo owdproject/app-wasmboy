@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import {UseTimeAgo} from "@vueuse/components";
+import {useWasmboy} from "../../../composables/useWasmboy";
+import {useWasmboyLibrary} from "../../../composables/useWasmboyLibrary";
+import {onBeforeMount, onBeforeUnmount} from "vue"
 
 const wasmboy = useWasmboy()
 const wasmboyLibrary = useWasmboyLibrary()
