@@ -21,7 +21,7 @@ This app for Open Web Desktop is a Game Boy emulator based on torch2424/wasmboy.
 2.  Install the desktop module using npm or yarn:
 
     ```bash
-    npm install @owdproject/app-wasmboy wasmboy
+    npm install @owdproject/app-wasmboy
     ```
 
 3.  Register the application in your desktop configuration file:

@@ -4,7 +4,6 @@ import {registerTailwindPath} from "@owdproject/core/runtime/utils/utilsApp";
 export default defineNuxtModule({
     meta: {
         name: 'owd-app-wasmboy',
-        priority: 0,
     },
     async setup(options, nuxt) {
         const {resolve} = createResolver(import.meta.url);
