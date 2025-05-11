@@ -1,11 +1,16 @@
 <script setup lang="ts">
+import {useApplicationManager} from "@owdproject/core/runtime/composables/useApplicationManager";
+
 import WasmboyManagerGames from "../Wasmboy/Manager/WasmboyManagerGames.vue";
 import WasmboyManagerSaves from "../Wasmboy/Manager/WasmboyManagerSaves.vue";
 import WasmboyManagerSettings from "../Wasmboy/Manager/WasmboyManagerSettings.vue";
+import WasmboyManagerAtproto from "../Wasmboy/Manager/WasmboyManagerAtproto.vue";
 
 defineProps<{
   window: IWindowController
 }>()
+
+const applicationManager = useApplicationManager()
 </script>
 
 <template>
@@ -16,6 +21,7 @@ defineProps<{
         <Tab :value="0">Games</Tab>
         <Tab :value="1">Saves</Tab>
         <Tab :value="2">Settings</Tab>
+        <Tab :value="3">ATProto</Tab>
       </TabList>
       <TabPanels>
 
@@ -28,7 +34,14 @@ defineProps<{
         </TabPanel>
 
         <TabPanel :value="2">
-          <WasmboyManagerSettings :meta="window.application.meta" />
+          <WasmboyManagerSettings />
+        </TabPanel>
+
+        <TabPanel
+            v-if="applicationManager.isAppDefined('org.owdproject.atproto')"
+            :value="3"
+        >
+          <WasmboyManagerAtproto />
         </TabPanel>
       </TabPanels>
     </Tabs>

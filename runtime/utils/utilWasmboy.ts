@@ -47,3 +47,15 @@ export async function getLatestGameFromWasmboyStorage(): Promise<{ cartridgeRom:
     const allSaves = await getAllGamesFromWasmboyStorage()
     return allSaves.length > 0 ? allSaves[allSaves.length - 1] : undefined
 }
+
+export function slugify(text: string) {
+    return text
+        .toString()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\s-]/g, "")
+        .replace(/\s+/g, "-")
+        .replace(/-+/g, "-");
+}
