@@ -21,7 +21,7 @@ const applicationManager = useApplicationManager()
         <Tab :value="0">Games</Tab>
         <Tab :value="1">Saves</Tab>
         <Tab :value="2">Settings</Tab>
-        <Tab :value="3">ATProto</Tab>
+        <Tab :value="3" v-if="applicationManager.isAppDefined('org.owdproject.atproto')">ATProto</Tab>
       </TabList>
       <TabPanels>
 
