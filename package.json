@@ -10,7 +10,8 @@
     "url": "https://github.com/dxlliv"
   },
   "dependencies": {
-    "wasmboy": "0.7.1"
+    "wasmboy": "0.7.1",
+    "json-arraybuffer-reviver": "^2.0.0"
   },
   "peerDependencies": {
     "@owdproject/core": ">=3.0.0-alpha.9"
