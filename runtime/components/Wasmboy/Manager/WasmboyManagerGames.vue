@@ -28,6 +28,7 @@ async function onGameSelect(game) {
         v-for="game of wasmboyLibrary.list.value"
         class="flex"
     >
+
       <div class="flex-1" v-if="game.cartridgeInfo">
 
         <div>
@@ -46,13 +47,13 @@ async function onGameSelect(game) {
       <div class="flex items-center">
         <ButtonGroup>
 
-        <Button @click="onGameSelect(game)">
-          <Icon name="mdi:upload"/>
-        </Button>
+          <Button @click="onGameSelect(game)">
+            <Icon name="mdi:upload"/>
+          </Button>
 
-        <Button @click="wasmboyLibrary.removeGame(game.cartridgeInfo.header)">
-          <Icon name="mdi:remove"/>
-        </Button>
+          <Button @click="wasmboyLibrary.removeGame(game.cartridgeInfo.header)">
+            <Icon name="mdi:remove"/>
+          </Button>
 
         </ButtonGroup>
       </div>

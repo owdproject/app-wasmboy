@@ -3,6 +3,7 @@ import {useDocumentVisibility, useFileDialog} from "@vueuse/core"
 import {onMounted, onUnmounted, watch, useTemplateRef} from "vue"
 import {computed} from "@vue/reactivity"
 import {useWasmboy} from "../../composables/useWasmboy"
+import {useWasmboyStore} from "../../stores/storeWasmboy";
 
 const props = defineProps<{
   window: IWindowController
@@ -13,13 +14,17 @@ const visibility = useDocumentVisibility()
 const wasmboy = useWasmboy()
 const wasmboyCanvas: any = useTemplateRef('wasmboyCanvas')
 
-const meta = props.window.application.meta
+const wasmboyStore = useWasmboyStore()
 
 // window lifecycle
 
 onMounted(async () => {
   if (!wasmboyCanvas.value) {
     return
+  }
+
+  if (wasmboyStore.$persistedState) {
+    await wasmboyStore.$persistedState.isReady()
   }
 
   await wasmboy.setup(wasmboyCanvas.value, props.window)
@@ -32,7 +37,7 @@ onUnmounted(() => {
 
 watch(visibility, (newVisibility) => {
   if (newVisibility === 'visible') {
-    if (!meta.config.isPausedByPlayer && wasmboy.status.isPaused) {
+    if (!wasmboyStore.config.isPausedByPlayer && wasmboy.status.isPaused) {
       wasmboy.playEmulator()
     }
   }
@@ -57,7 +62,7 @@ function onWasmBoyWindowManagerOpen() {
 }
 
 const gameScreenSizeClass = computed(() => {
-  switch (props.window.application.meta.config.screenSize) {
+  switch (wasmboyStore.config.screenSize) {
     case 1.5:
       return 'game-screen--15'
     case 2:
@@ -91,10 +96,10 @@ const gameScreenSizeClass = computed(() => {
 
       <ButtonWindowNav
           v-if="wasmboy.status.isLoaded" rounded
-          :title="meta.config.isPausedByPlayer ? 'Play' : 'Pause'"
+          :title="wasmboyStore.config.isPausedByPlayer ? 'Play' : 'Pause'"
           @click="wasmboy.togglePlayEmulator()"
       >
-        <Icon :name="!meta.config.isPausedByPlayer ? 'mdi:pause' : 'mdi:play'"/>
+        <Icon :name="!wasmboyStore.config.isPausedByPlayer ? 'mdi:pause' : 'mdi:play'"/>
       </ButtonWindowNav>
 
     </template>
@@ -103,6 +108,15 @@ const gameScreenSizeClass = computed(() => {
         ref="wasmboyCanvas"
         :class="gameScreenSizeClass"
     />
+
+    <div
+        v-if="!wasmboy.status.isLoaded"
+        class="owd-wasmboy__missing-rom cursor-pointer mt-2"
+        title="Load ROM"
+        @click="onWasmboyRomSelect"
+    >
+      <Icon name="solar:sd-card-bold" />
+    </div>
 
   </Window>
 </template>
@@ -114,6 +128,15 @@ const gameScreenSizeClass = computed(() => {
 }
 
 .owd-wasmboy {
+  &__missing-rom {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 100px;
+    opacity: 0.15;
+  }
+
   &__actions {
     position: absolute;
     bottom: 32px;

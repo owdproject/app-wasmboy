@@ -33,15 +33,6 @@ export default {
             },
         },
     },
-    meta: {
-        config: {
-            gameTitleAsWindowName: false,
-            isPausedByPlayer: false,
-            isGbcColorizationEnabled: true,
-            speed: 1,
-            screenSize: 1,
-        }
-    },
     entries: {
         wasmboy: {
             command: "wasmboy"

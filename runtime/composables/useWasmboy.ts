@@ -4,8 +4,10 @@ import {useWasmboyLibrary} from "./useWasmboyLibrary";
 import {debugLog, debugWarn, debugError} from "@owdproject/core/runtime/utils/utilDebug"
 import {reactive} from "@vue/reactivity"
 import {wasmboyConfig, getLatestGameFromWasmboyStorage} from "../utils/utilWasmboy";
+import {useWasmboyStore} from "owd-app-wasmboy//stores/storeWasmboy";
 
 const wasmboyLibrary = useWasmboyLibrary()
+const wasmboyStore = useWasmboyStore()
 
 const status = reactive({
     isLoaded: false,
@@ -15,11 +17,13 @@ const status = reactive({
 let window: IWindowController
 
 export function useWasmboy() {
+    const storeWasmboy = useWasmboyStore()
+
     async function setup(canvas: HTMLCanvasElement, _window: IWindowController) {
         window = _window
 
         // override wasmboy config
-        wasmboyConfig.isGbcColorizationEnabled = window.application.meta.config.isGbcColorizationEnabled
+        wasmboyConfig.isGbcColorizationEnabled = storeWasmboy.config.isGbcColorizationEnabled
         wasmboyConfig.onPause = () => {
             status.isPaused = true
         }
@@ -32,8 +36,8 @@ export function useWasmboy() {
      */
     async function restorePreviousGame() {
         // wait until store has been restored
-        if (window.application.store.$persistedState) {
-            await window.application.store.$persistedState.isReady()
+        if (wasmboyStore.$persistedState) {
+            await wasmboyStore.$persistedState.isReady()
         }
 
         const latestGame = await getLatestGameFromWasmboyStorage()
@@ -55,33 +59,41 @@ export function useWasmboy() {
             } else {
                 const saves: WasmboySaveState[] = await WasmBoy.getSaveStates()
 
-                if (saves.length > 0) {
+                if (saves && saves.length > 0) {
                     await loadGameState(saves[saves.length - 1])
+                } else {
+                    console.log('No save-game found')
                 }
             }
         } catch (error) {
             debugError('Error loading game:', error)
         }
 
-        await playEmulator()
+        if (!wasmboyStore.config.isPausedByPlayer) {
+            await playEmulator()
+        }
     }
 
     /**
      * Load save-game
      *
-     * @param save
+     * @param saveState
      */
-    async function loadGameState(save: WasmboySaveState) {
+    async function loadGameState(saveState: WasmboySaveState) {
         await WasmBoy.pause()
-        await WasmBoy.loadState(save)
+        await WasmBoy.loadState(saveState)
     }
 
     /**
-     * Save save-game
+     * Save and return save-game
      */
     async function saveGameState() {
         try {
-            await WasmBoy.saveState()
+            const gameSave = await WasmBoy.saveState()
+
+            await pauseEmulator()
+
+            return gameSave
         } catch (error) {
             debugError('Error saving the game:', error)
         }
@@ -100,21 +112,17 @@ export function useWasmboy() {
                 fileName: cartridgeRom.fileName
             })
 
-            debugWarn(window.application.meta.config)
+            debugWarn(storeWasmboy.config)
 
-            setSpeed(window.application.meta.config.speed)
+            setSpeed(storeWasmboy.config.speed)
 
             await restoreGameState()
 
             status.isLoaded = true
 
-            if (!window.application.meta.config.isPausedByPlayer) {
-                await playEmulator()
-            }
-
             const cartridgeInfo = await WasmBoy._getCartridgeInfo()
 
-            wasmboyLibrary.setCurrentGameKey(cartridgeInfo.header)
+            await wasmboyLibrary.setCurrentGameKey(cartridgeInfo.header)
             setWindowNameAsGameTitle()
 
             debugLog('Cartridge ROM loaded into WasmBoy')
@@ -146,7 +154,7 @@ export function useWasmboy() {
     async function playEmulator() {
         await WasmBoy.play()
         status.isPaused = false
-        window.application.meta.config.isPausedByPlayer = false
+        storeWasmboy.config.isPausedByPlayer = false
     }
 
     /**
@@ -155,7 +163,7 @@ export function useWasmboy() {
     async function pauseEmulator() {
         await WasmBoy.pause()
         status.isPaused = true
-        window.application.meta.config.isPausedByPlayer = true
+        storeWasmboy.config.isPausedByPlayer = true
     }
 
     /**
@@ -181,7 +189,7 @@ export function useWasmboy() {
      */
     function setSpeed(speed: number) {
         WasmBoy.setSpeed(speed)
-        window.application.meta.config.speed = speed
+        storeWasmboy.config.speed = speed
     }
 
     function setWindowNameAsGameTitle() {
@@ -189,7 +197,7 @@ export function useWasmboy() {
             return input.replace(/[^a-zA-Z0-9\s.,!?()\-]/g, '');
         }
 
-        if (!window.application.meta.config.gameTitleAsWindowName) {
+        if (!storeWasmboy.config.gameTitleAsWindowName) {
             return
         }
 
