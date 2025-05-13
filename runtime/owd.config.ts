@@ -6,7 +6,7 @@ export default {
     singleton: true,
     windows: {
         main: {
-            component: () => import('./runtime/components/Window/WindowWasmboy.vue'),
+            component: () => import('./components/Window/WindowWasmboy.vue'),
             resizable: false,
             size: {
                 width: 'auto',
@@ -19,7 +19,7 @@ export default {
             },
         },
         manager: {
-            component: () => import('./runtime/components/Window/WindowWasmboyManager.vue'),
+            component: () => import('./components/Window/WindowWasmboyManager.vue'),
             title: "WasmBoy Manager",
             resizable: false,
             size: {
