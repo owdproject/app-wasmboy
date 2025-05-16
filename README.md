@@ -13,7 +13,7 @@ This app for Open Web Desktop is a Game Boy emulator based on torch2424/wasmboy.
 ## Installation
 
 ```bash
-nx run desktop:install-app --name=@owdproject/app-wasmboy
+owd install-app @owdproject/app-wasmboy
 ```
 
 ## Usage
