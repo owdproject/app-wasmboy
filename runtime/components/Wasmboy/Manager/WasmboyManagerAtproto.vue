@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {useWasmboyStore} from "owd-app-wasmboy/stores/storeWasmboy";
+import { useWasmboyStore } from 'owd-app-wasmboy/stores/storeWasmboy'
 
 const wasmboyStore = useWasmboyStore()
 </script>
@@ -10,11 +10,9 @@ const wasmboyStore = useWasmboyStore()
   </div>
 
   <label>
-    <Checkbox binary v-model="wasmboyStore.config.atprotoSyncGameSaves"/>
+    <Checkbox binary v-model="wasmboyStore.config.atprotoSyncGameSaves" />
     Game saves will sync with your PDS
   </label>
 </template>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

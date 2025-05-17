@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import {useDocumentVisibility, useFileDialog} from "@vueuse/core"
-import {onMounted, onUnmounted, watch, useTemplateRef} from "vue"
-import {computed} from "@vue/reactivity"
-import {useWasmboy} from "../../composables/useWasmboy"
-import {useWasmboyStore} from "../../stores/storeWasmboy";
+import { useDocumentVisibility, useFileDialog } from '@vueuse/core'
+import { onMounted, onUnmounted, watch, useTemplateRef } from 'vue'
+import { computed } from '@vue/reactivity'
+import { useWasmboy } from '../../composables/useWasmboy'
+import { useWasmboyStore } from '../../stores/storeWasmboy'
 
 const props = defineProps<{
   window: IWindowController
@@ -45,7 +45,7 @@ watch(visibility, (newVisibility) => {
 
 // handle input file
 
-const {open: onWasmboyRomSelect, onChange} = useFileDialog({
+const { open: onWasmboyRomSelect, onChange } = useFileDialog({
   accept: '.gb,.gbc,.gba,.zip',
   multiple: false,
 })
@@ -75,49 +75,44 @@ const gameScreenSizeClass = computed(() => {
 
 <template>
   <Window :window="window" class="owd-wasmboy">
-
     <template #nav-append>
-
       <ButtonWindowNav
-          v-if="wasmboy.status.isLoaded" rounded
-          title="WasmBoy Manager"
-          @click="onWasmBoyWindowManagerOpen"
+        v-if="wasmboy.status.isLoaded"
+        rounded
+        title="WasmBoy Manager"
+        @click="onWasmBoyWindowManagerOpen"
       >
-        <Icon name="mdi:settings"/>
+        <Icon name="mdi:settings" />
+      </ButtonWindowNav>
+
+      <ButtonWindowNav rounded title="Load ROM" @click="onWasmboyRomSelect">
+        <Icon name="mdi:eject" />
       </ButtonWindowNav>
 
       <ButtonWindowNav
-          rounded
-          title="Load ROM"
-          @click="onWasmboyRomSelect"
+        v-if="wasmboy.status.isLoaded"
+        rounded
+        :title="wasmboyStore.config.isPausedByPlayer ? 'Play' : 'Pause'"
+        @click="wasmboy.togglePlayEmulator()"
       >
-        <Icon name="mdi:eject"/>
+        <Icon
+          :name="
+            !wasmboyStore.config.isPausedByPlayer ? 'mdi:pause' : 'mdi:play'
+          "
+        />
       </ButtonWindowNav>
-
-      <ButtonWindowNav
-          v-if="wasmboy.status.isLoaded" rounded
-          :title="wasmboyStore.config.isPausedByPlayer ? 'Play' : 'Pause'"
-          @click="wasmboy.togglePlayEmulator()"
-      >
-        <Icon :name="!wasmboyStore.config.isPausedByPlayer ? 'mdi:pause' : 'mdi:play'"/>
-      </ButtonWindowNav>
-
     </template>
 
-    <canvas
-        ref="wasmboyCanvas"
-        :class="gameScreenSizeClass"
-    />
+    <canvas ref="wasmboyCanvas" :class="gameScreenSizeClass" />
 
     <div
-        v-if="!wasmboy.status.isLoaded"
-        class="owd-wasmboy__missing-rom cursor-pointer mt-2"
-        title="Load ROM"
-        @click="onWasmboyRomSelect"
+      v-if="!wasmboy.status.isLoaded"
+      class="owd-wasmboy__missing-rom cursor-pointer mt-2"
+      title="Load ROM"
+      @click="onWasmboyRomSelect"
     >
       <Icon name="solar:sd-card-bold" />
     </div>
-
   </Window>
 </template>
 
