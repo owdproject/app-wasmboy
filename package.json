@@ -9,16 +9,61 @@
     "wasmboy"
   ],
   "license": "GPL-3.0-or-later",
-  "homepage": "https://github.com/owdproject/app-about",
+  "homepage": "https://github.com/owdproject/app-wasmboy",
   "author": {
     "name": "Open Web Desktop Team",
     "url": "https://github.com/owdproject"
   },
-  "dependencies": {
-    "wasmboy": "0.7.1",
-    "json-arraybuffer-reviver": "^2.0.0"
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/types.d.mts",
+      "development": "./src/module.ts",
+      "import": "./dist/module.mjs"
+    }
   },
-  "peerDependencies": {
-    "@owdproject/core": "^3.1.0"
+  "main": "./dist/module.mjs",
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./dist/types.d.mts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "nx": {
+    "name": "app-wasmboy"
+  },
+  "scripts": {
+    "prepack": "nuxt-module-build build",
+    "dev": "pnpm run dev:prepare && cd playground && pnpm exec nuxt dev",
+    "dev:build": "nuxt build playground",
+    "dev:generate": "NUXT_APP_BASE_URL=${NUXT_APP_BASE_URL:-/app-wasmboy/} nuxt generate playground",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && cd playground && pnpm exec nuxt prepare",
+    "validate": "desktop validate .",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
+    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "@nuxt/kit": "^4.4.6",
+    "json-arraybuffer-reviver": "^2.0.0",
+    "wasmboy": "0.7.1"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "^3.2.4",
+    "@nuxt/eslint-config": "^1.15.2",
+    "@nuxt/module-builder": "^1.0.2",
+    "@nuxt/schema": "^4.4.6",
+    "@nuxt/test-utils": "^4.0.3",
+    "@types/node": "latest",
+    "eslint": "^10.4.0",
+    "nuxt": "^4.4.6",
+    "typescript": "~6.0.3",
+    "vitest": "^4.1.7",
+    "vue-tsc": "^3.3.1"
   }
 }
