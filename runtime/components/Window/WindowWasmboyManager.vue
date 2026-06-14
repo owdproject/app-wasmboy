@@ -14,7 +14,7 @@ const applicationManager = useApplicationManager()
 </script>
 
 <template>
-  <Window
+  <DesktopWindow
     :window="window"
     :content="{ padded: true }"
     class="owd-wasmboy-manager"
@@ -51,7 +51,7 @@ const applicationManager = useApplicationManager()
         </TabPanel>
       </TabPanels>
     </Tabs>
-  </Window>
+  </DesktopWindow>
 </template>
 
 <style scoped lang="scss">

@@ -74,7 +74,7 @@ const gameScreenSizeClass = computed(() => {
 </script>
 
 <template>
-  <Window :window="window" class="owd-wasmboy">
+  <DesktopWindow :window="window" class="owd-wasmboy">
     <template #nav-append>
       <ButtonWindowNav
         v-if="wasmboy.status.isLoaded"
@@ -113,7 +113,7 @@ const gameScreenSizeClass = computed(() => {
     >
       <Icon name="solar:sd-card-bold" />
     </div>
-  </Window>
+  </DesktopWindow>
 </template>
 
 <style scoped lang="scss">
