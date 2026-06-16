@@ -53,6 +53,10 @@
     "json-arraybuffer-reviver": "^2.0.0",
     "wasmboy": "0.7.1"
   },
+  "peerDependencies": {
+    "@owdproject/core": "^3.4.1",
+    "@owdproject/kit-tailwind": "^0.1.0"
+  },
   "devDependencies": {
     "@nuxt/devtools": "^3.2.4",
     "@nuxt/eslint-config": "^1.15.2",
