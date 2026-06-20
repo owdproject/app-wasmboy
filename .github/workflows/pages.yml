@@ -67,9 +67,11 @@ jobs:
 
       - run: npm i -g --force corepack@latest && corepack enable
 
-      - name: Allow wasmboy git dependency build scripts
+      - name: Apply wasmboy playground allowBuilds
         working-directory: client
-        run: node apps/app-wasmboy/ci/patch-client-workspace.mjs
+        run: |
+          node apps/app-wasmboy/ci/patch-client-workspace.mjs
+          grep -Fq 'audiobuffer-to-wav@https://codeload.github.com/torch2424/audiobuffer-to-wav' pnpm-workspace.yaml
 
       - name: Install monorepo dependencies
         working-directory: client

@@ -7,7 +7,7 @@ const fragmentPath = resolve(appRoot, 'playground/pnpm-workspace.yaml')
 const workspaceFile = resolve(process.cwd(), 'pnpm-workspace.yaml')
 
 const fragment = readFileSync(fragmentPath, 'utf8')
-const clientText = readFileSync(workspaceFile, 'utf8')
+let clientText = readFileSync(workspaceFile, 'utf8')
 
 const allowMatch = fragment.match(/^allowBuilds:\n((?:  .+\n?)+)/m)
 if (!allowMatch) {
@@ -25,20 +25,36 @@ if (!clientText.includes('allowBuilds:')) {
   process.exit(1)
 }
 
-let next = clientText
+const lines = clientText.split('\n')
+let allowStart = lines.findIndex(line => line === 'allowBuilds:')
+if (allowStart === -1) {
+  console.error('client pnpm-workspace.yaml: allowBuilds block not found')
+  process.exit(1)
+}
+
+let allowEnd = allowStart + 1
+while (allowEnd < lines.length && lines[allowEnd].startsWith('  ')) {
+  allowEnd++
+}
+
 for (const entry of entries) {
   const key = entry.replace(/: true$/, '').trim()
-  if (next.includes(key)) {
+  if (clientText.includes(key)) {
     continue
   }
-  next = next.replace(
-    /^(\s*unrs-resolver: true\s*)$/m,
-    `$1\n${entry}`,
-  )
+  lines.splice(allowEnd, 0, entry)
+  allowEnd++
 }
 
-if (next === clientText) {
-  process.exit(0)
+const next = `${lines.join('\n')}\n`
+writeFileSync(workspaceFile, next)
+
+for (const entry of entries) {
+  const key = entry.replace(/: true$/, '').trim()
+  if (!next.includes(key)) {
+    console.error(`failed to merge allowBuilds entry: ${key}`)
+    process.exit(1)
+  }
 }
 
-writeFileSync(workspaceFile, next.endsWith('\n') ? next : `${next}\n`)
+console.log('merged wasmboy playground allowBuilds into client workspace')
