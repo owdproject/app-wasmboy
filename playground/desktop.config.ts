@@ -1,16 +1,21 @@
 import { defineDesktopConfig } from '@owdproject/core'
 
 export default defineDesktopConfig({
-  theme: '@owdproject/theme-nova',
+  theme: '@owdproject/theme-win31',
+  modules: ['@owdproject/module-fs', '@owdproject/module-persistence'],
   apps: ['@owdproject/app-wasmboy'],
-  modules: [],
   systemBar: {
     enabled: true,
     startButton: true,
   },
+  fs: {
+    mounts: {
+      '/mnt/test': '/test-small.zip',
+    },
+  },
   about: {
     title: 'WasmBoy (playground)',
-    subtitle: 'app-wasmboy · theme-nova',
+    subtitle: 'app-wasmboy · theme-win31',
     href: 'https://github.com/owdproject/app-wasmboy',
     versionText: 'Nuxt Desktop',
     icons: [

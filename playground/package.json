@@ -10,7 +10,9 @@
   "dependencies": {
     "@owdproject/app-wasmboy": "workspace:*",
     "@owdproject/core": "workspace:*",
-    "@owdproject/theme-nova": "workspace:*",
+    "@owdproject/module-fs": "workspace:*",
+    "@owdproject/module-persistence": "workspace:*",
+    "@owdproject/theme-win31": "workspace:*",
     "nuxt": "^4.4.6"
   }
 }
