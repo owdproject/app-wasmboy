@@ -44,17 +44,11 @@ jobs:
           repository: owdproject/module-fs
           path: client/packages/module-fs
 
-      - name: Checkout module-persistence
+      - name: Checkout theme-nova
         uses: actions/checkout@v4
         with:
-          repository: owdproject/module-persistence
-          path: client/packages/module-persistence
-
-      - name: Checkout theme-win31
-        uses: actions/checkout@v4
-        with:
-          repository: owdproject/theme-win31
-          path: client/themes/theme-win31
+          repository: owdproject/theme-nova
+          path: client/themes/theme-nova
 
       - name: Overlay this app-wasmboy repo
         uses: actions/checkout@v4
