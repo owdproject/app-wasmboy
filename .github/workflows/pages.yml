@@ -50,11 +50,11 @@ jobs:
           repository: owdproject/module-persistence
           path: client/packages/module-persistence
 
-      - name: Checkout theme-win95
+      - name: Checkout theme-win31
         uses: actions/checkout@v4
         with:
-          repository: owdproject/theme-win95
-          path: client/themes/theme-win95
+          repository: owdproject/theme-win31
+          path: client/themes/theme-win31
 
       - name: Overlay this app-wasmboy repo
         uses: actions/checkout@v4
@@ -70,12 +70,6 @@ jobs:
       - name: Allow wasmboy git dependency build scripts
         working-directory: client
         run: node apps/app-wasmboy/ci/patch-client-workspace.mjs
-
-      - name: Point playground at theme-win95 until theme-win31 is published
-        working-directory: client/apps/app-wasmboy
-        run: |
-          sed -i 's/@owdproject\/theme-win31/@owdproject\/theme-win95/g' playground/package.json
-          sed -i 's/theme-win31/theme-win95/g' playground/desktop.config.ts
 
       - name: Install monorepo dependencies
         working-directory: client
