@@ -10,6 +10,7 @@
   "dependencies": {
     "@owdproject/app-wasmboy": "workspace:*",
     "@owdproject/core": "workspace:*",
-    "@owdproject/theme-nova": "workspace:*"
+    "@owdproject/theme-nova": "workspace:*",
+    "nuxt": "^4.4.6"
   }
 }

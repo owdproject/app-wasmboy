@@ -9,13 +9,8 @@ export default {
       component: () => import('./components/Window/WindowWasmboy.vue'),
       resizable: false,
       size: {
-        width: 'auto',
-        height: 'auto',
-      },
-      position: {
-        x: 400,
-        y: 240,
-        z: 0,
+        width: 320,
+        height: 288,
       },
     },
     manager: {
@@ -25,11 +20,6 @@ export default {
       size: {
         width: 400,
         height: 400,
-      },
-      position: {
-        x: 400,
-        y: 240,
-        z: 0,
       },
     },
   },
