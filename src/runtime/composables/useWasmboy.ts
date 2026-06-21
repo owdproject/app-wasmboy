@@ -22,6 +22,14 @@ const status = reactive({
 })
 
 let window: IWindowController
+let lastGameTitle: string | undefined
+
+function filterValidWindowTitle(input: string | undefined): string | undefined {
+  if (!input?.trim()) {
+    return undefined
+  }
+  return input.replace(/[^a-zA-Z0-9\s.,!?()\-]/g, '').trim() || undefined
+}
 
 export function useWasmboy() {
   const storeWasmboy = useWasmboyStore()
@@ -130,7 +138,7 @@ export function useWasmboy() {
       const cartridgeInfo = await WasmBoy._getCartridgeInfo()
 
       await wasmboyLibrary.setCurrentGameKey(cartridgeInfo.header)
-      setWindowNameAsGameTitle()
+      syncWindowTitleFromGame(cartridgeInfo.titleAsString)
 
       debugLog('Cartridge ROM loaded into WasmBoy')
     } catch (error) {
@@ -203,22 +211,32 @@ export function useWasmboy() {
     storeWasmboy.config.speed = speed
   }
 
-  function setWindowNameAsGameTitle() {
-    function filterValidChars(input: string): string {
-      return input.replace(/[^a-zA-Z0-9\s.,!?()\-]/g, '')
+  function syncWindowTitleFromGame(title?: string) {
+    if (title) {
+      lastGameTitle = title
     }
 
-    if (!storeWasmboy.config.gameTitleAsWindowName) {
+    if (!window) {
       return
     }
 
-    window.actions.setTitleOverride(
-      filterValidChars(
-        wasmboyLibrary.currentGame.value
-          ? wasmboyLibrary.currentGame.value.cartridgeInfo.titleAsString
-          : undefined,
-      ),
-    )
+    if (!storeWasmboy.config.gameTitleAsWindowName) {
+      window.actions.resetWindowTitleOverride()
+      return
+    }
+
+    const raw =
+      title
+      ?? lastGameTitle
+      ?? wasmboyLibrary.currentGame.value?.cartridgeInfo.titleAsString
+
+    const filtered = filterValidWindowTitle(raw)
+    if (!filtered) {
+      window.actions.resetWindowTitleOverride()
+      return
+    }
+
+    window.actions.setWindowTitleOverride(filtered)
   }
 
   return {
@@ -230,6 +248,7 @@ export function useWasmboy() {
     loadGame,
     insertCartridge,
     setSpeed,
+    syncWindowTitleFromGame,
     playEmulator,
     pauseEmulator,
     resetEmulator,

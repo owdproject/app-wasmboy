@@ -43,6 +43,13 @@ watch(visibility, (newVisibility) => {
   }
 })
 
+watch(
+  () => wasmboyStore.config.gameTitleAsWindowName,
+  () => {
+    wasmboy.syncWindowTitleFromGame()
+  },
+)
+
 // handle input file
 
 const { open: onWasmboyRomSelect, onChange } = useFileDialog({
