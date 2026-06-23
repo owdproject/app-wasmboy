@@ -50,6 +50,17 @@ watch(
   },
 )
 
+watch(
+  () => wasmboyStore.config.screenSize,
+  (newScale) => {
+    props.window.actions.setSize({
+      width: 320 * newScale,
+      height: 288 * newScale,
+    })
+  },
+  { immediate: true },
+)
+
 // handle input file
 
 const { open: onWasmboyRomSelect, onChange } = useFileDialog({
@@ -110,7 +121,7 @@ const gameScreenSizeClass = computed(() => {
       </ButtonWindowNav>
     </template>
 
-    <canvas ref="wasmboyCanvas" :class="gameScreenSizeClass" />
+    <canvas v-show="wasmboy.status.isLoaded" ref="wasmboyCanvas" :class="gameScreenSizeClass" />
 
     <div
       v-if="!wasmboy.status.isLoaded"
@@ -123,13 +134,17 @@ const gameScreenSizeClass = computed(() => {
   </DesktopWindow>
 </template>
 
-<style scoped lang="scss">
-:deep(.p-card) {
-  width: fit-content !important;
-  height: fit-content !important;
-}
-
+<style lang="scss">
 .owd-wasmboy {
+  .p-card {
+    width: fit-content !important;
+    height: fit-content !important;
+  }
+
+  .owd-window__content {
+    overflow: hidden !important;
+  }
+
   &__missing-rom {
     position: absolute;
     top: 50%;
@@ -159,21 +174,21 @@ const gameScreenSizeClass = computed(() => {
   &:hover {
     opacity: 1;
   }
-}
 
-.game-screen {
-  pointer-events: none;
-  width: 320px;
-  height: 288px;
+  .game-screen {
+    pointer-events: none;
+    width: 320px;
+    height: 288px;
 
-  &--15 {
-    width: 480px;
-    height: 432px;
-  }
+    &--15 {
+      width: 480px;
+      height: 432px;
+    }
 
-  &--2 {
-    width: 640px;
-    height: 576px;
+    &--2 {
+      width: 640px;
+      height: 576px;
+    }
   }
 }
 </style>
