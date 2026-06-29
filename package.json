@@ -1,6 +1,6 @@
 {
   "name": "@owdproject/app-wasmboy",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "WasmBoy App for your Open Web Desktop client",
   "keywords": [
     "owd-client",
@@ -34,9 +34,6 @@
   "files": [
     "dist"
   ],
-  "nx": {
-    "name": "app-wasmboy"
-  },
   "scripts": {
     "prepack": "nuxt-module-build build",
     "dev": "pnpm run dev:prepare && cd playground && pnpm exec nuxt dev",
